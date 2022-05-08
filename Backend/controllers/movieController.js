@@ -6,9 +6,10 @@ export const addMovie = async (req,res) =>{
          const name = req.body.name;
          const description = req.body.description;
          const showTime = req.body.showTime;
-         const cast = req.body.cast;
+         const theaters = req.body.theaters;
+         const photo = req.body.photo;
 
-         const newMovie = new Movie({name,description,showTime,cast})
+         const newMovie = new Movie({name,description,showTime,theaters,photo})
 
          try{
 
@@ -20,8 +21,16 @@ export const addMovie = async (req,res) =>{
             return res.status(500).json(err);
 
          }
+}
 
+export const displayMovie = async (req,res) => {
 
+  Movie.find().then((data)=>{
+     res.json(data);
+     
+  }).catch((err)=>{
 
+     console.catch.log(err);
+  })
 
 }

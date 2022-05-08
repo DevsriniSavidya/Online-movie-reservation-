@@ -18,10 +18,14 @@ const movieSchema = new Schema({
         required:true,
         trim:true
     },
-    cast:[{
-        type:String,
+    theaters:{
+        type:[String],
         required:true
-    }]
+    },
+    photo:{
+        type:String,
+        
+    }
 
    
 },{timestamps:true})
