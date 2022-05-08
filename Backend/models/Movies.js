@@ -18,6 +18,11 @@ const movieSchema = new Schema({
         required:true,
         trim:true
     },
+    cast:[{
+        type:String,
+        required:true
+    }]
+
    
 },{timestamps:true})
 

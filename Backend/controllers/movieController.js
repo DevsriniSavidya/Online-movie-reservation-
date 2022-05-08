@@ -6,8 +6,9 @@ export const addMovie = async (req,res) =>{
          const name = req.body.name;
          const description = req.body.description;
          const showTime = req.body.showTime;
+         const cast = req.body.cast;
 
-         const newMovie = new Movie({name,description,showTime})
+         const newMovie = new Movie({name,description,showTime,cast})
 
          try{
 
