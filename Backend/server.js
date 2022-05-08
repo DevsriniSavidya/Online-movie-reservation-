@@ -4,14 +4,18 @@ import bodyParser from 'body-parser';
 import dotenv  from 'dotenv';
 import colors from 'colors'
 import  './db/db.js' 
+import movieRoutes from './routes/movieRoutes.js'
 
 
 const app = new express();
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));    
 app.use(bodyParser.json());
 dotenv.config();
+
+//Movie Routes
+app.use("/movies",movieRoutes);
 
 
 const PORT = process.env.PORT || 5000;
