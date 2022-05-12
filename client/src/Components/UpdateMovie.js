@@ -56,7 +56,7 @@ export default function UpdateMovie(props) {
 
         const id = localStorage.getItem('ID');
 
-         async function getDetails(){   
+    async function getDetails(){   
 
      await axios.get(`http://localhost:8000/movies/movieDetail/${id}`).then((res)=>{
 

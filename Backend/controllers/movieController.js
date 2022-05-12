@@ -10,8 +10,9 @@ export const addMovie = async (req,res) =>{
          const ticketPrice = req.body.ticketPrice;
          const filmType = req.body.filmType;
          const photo = req.body.photo;
+         const banner = req.body.banner;
 
-         const newMovie = new Movie({name,description,showTime,theaters,ticketPrice,filmType,photo})
+         const newMovie = new Movie({name,description,showTime,theaters,ticketPrice,filmType,photo,banner})
 
          try{
 
@@ -75,7 +76,7 @@ export const deleteMovie = async (req,res) =>{
 
 export const getMovieDetail = async (req,res)=>{
 
-   let movieId = req.params.id;
+   let movieId = req.params.id;    
    
    Movie.findById(movieId).then((data)=>{
        
@@ -83,7 +84,7 @@ export const getMovieDetail = async (req,res)=>{
      
    }).catch((err)=>{
 
-     console.catch.log(err);
-   })
+     console.catch.log(err);  
+   }) 
 
 }

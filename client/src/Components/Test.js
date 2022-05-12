@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import React from 'react'
 import {useState,useEffect} from 'react'
-import CardActions from '@mui/material/CardActions';
+import CardActions from '@mui/material/CardActions';  
 import Button from '@mui/material/Button';
 // import Alert from '@mui/material/Alert';
 // import AlertTitle from '@mui/material/AlertTitle';
@@ -84,7 +84,7 @@ const Test = (props) => {
         { request.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
-              <Link to={`/movieDetails/` + movie._id} >
+              <Link to={`/movieDetails/`}  onClick={()=>setData(movie)} >
                 <img src={movie.photo} alt={movie.name}  />
                 
               
