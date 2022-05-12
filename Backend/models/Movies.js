@@ -14,17 +14,27 @@ const movieSchema = new Schema({
         trim:true
     },
      showTime:{
-        type:String,
+        type:[String],
         required:true,
-        trim:true
+  
     },
     theaters:{
         type:[String],
-        required:true
+        required:true 
     },
     photo:{
         type:String,
         
+    },
+    ticketPrice:{
+        type:Number,
+        required:true,
+     
+    },
+     filmType:{
+        type:String,
+        required:true,
+        trim:true
     }
 
    
