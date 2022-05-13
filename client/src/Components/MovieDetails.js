@@ -3,6 +3,17 @@ import  {useState, useEffect}  from 'react';
 import axios from 'axios';
 import { id } from 'date-fns/locale';
 import styled from "styled-components";
+import Button from '@mui/material/Button';
+import { Link } from "react-router-dom";
+// import DatePicker from "react-datepicker";
+
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function MovieDetails(props) {
  
@@ -15,6 +26,13 @@ export default function MovieDetails(props) {
   const [banner,setBanner] = useState();
   const [ticketPrice,setTicketPrice] = useState();
   const [filmType,setFilmType] = useState();
+  const [newTime,setNewTime] = useState();
+  // const [startDate, setStartDate] = useState(new Date());
+const [date, setDate] = useState(new Date());
+
+  const [disable, setDisable] = React.useState(false);
+
+  
   
 
 
@@ -48,6 +66,46 @@ export default function MovieDetails(props) {
  
    },[]);
  
+  
+
+   const setNewT = (time) =>{
+         
+     setNewTime(time);
+     setDisable(true);
+
+   }
+
+  const handleSelectDateChange = (date) => {
+     setDate(date);
+  };
+
+  const startDate = new Date();
+
+  function disablePrevDates(startDate) {
+    const startSeconds = Date.parse(startDate);
+    return (date) => {
+      return Date.parse(date) < startSeconds;
+    }
+  }
+
+    console.log(date);
+
+    //Add To Cart
+   const AddToCart = async () =>{
+
+    //  e.preventDefault();
+
+    //  const cart = {
+        
+    //   movieId,
+    //   newTime,
+    //   date,
+    //   //me tikai ubt cart eke pennann ona tika ganin
+
+
+    //  }
+
+    }
  
 
   return (
@@ -60,10 +118,63 @@ export default function MovieDetails(props) {
         <img alt={photo} src={photo} />
       </ImageTitle>
       <ContentMeta>
-        <Controls>
-          <Player>
+        <SubTitle>{name}</SubTitle>
+        <Description>#{filmType}</Description>
+        <Description>{description}</Description>
+        <p>
+           <Player >
+             <StyledLink  role="button"  data-bs-toggle="collapse"  to="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
             <img src="/images/ticket.svg" alt="" />
             <span>Book Now</span>
+            </StyledLink>
+            
+          </Player>
+        </p>
+      
+        <div class="collapse" id="collapseExample">
+               <div class="card card-body">
+              <Description>Select Time </Description>
+              {showTime.map((time,index)=>( <div key={index}> 
+                <Button disabled={disable} className='mt-2 ms-2' variant="outlined" onClick={() => setNewT(time)}>{time}</Button> </div>
+              ))}
+              <Description>Select Date</Description>
+
+                <div className="col-md-12 mb-4 mx-3 mt-3">
+                 <div className="form-group" style={{width:"250px"}}>
+                   <LocalizationProvider dateAdapter={AdapterDateFns}>
+                     <Stack spacing={3}>
+                      <DesktopDatePicker
+                        shouldDisableDate={disablePrevDates(startDate)}
+                        inputFormat="dd/MM/yyyy"
+                        value={date}
+                        required
+                        onChange={handleSelectDateChange}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </Stack>
+                  </LocalizationProvider>
+                </div>
+                </div>
+                <Description>Ticket Price</Description>
+                Rs.{ticketPrice}
+
+                <hr/>
+                <center>
+                <Button variant="outlined" color="success" size='large' onClick={()=>AddToCart()} style={{width:"200px"}} >
+                 Add To Cart
+                 </Button>
+                 </center>
+
+            </div>
+         </div> 
+
+        {/* <Controls>
+          <Player >
+             <Link to={`/display`}  >
+            <img src="/images/ticket.svg" alt="" />
+            <span>Book Now</span>
+            </Link>
+            
           </Player>
           <Trailer>
             <img src="/images/play-icon-white.png" alt="" />
@@ -78,11 +189,10 @@ export default function MovieDetails(props) {
               <img src="/images/group-icon.png" alt="" />
             </div>
           </GroupWatch>
-        </Controls>
-        <SubTitle>{name}</SubTitle>
-        <Description>{description}</Description>
+        </Controls> */}
+        
       </ContentMeta>
-    </Container>
+    </Container> 
   )
 }
 
@@ -261,3 +371,12 @@ font-weight: thicker;
     font-size: 14px;
   }
 `;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
+
