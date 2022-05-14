@@ -79,7 +79,7 @@ const DisplayMovie = (props) => {
   return (
 
     <Container>
-      <h4>Recommended for You</h4>
+     <center> <h4>MOVIES</h4></center>
       <Content>
         { request.map((movie, key) => (
             <Wrap key={key}>
@@ -89,11 +89,12 @@ const DisplayMovie = (props) => {
                 
               
               </Link>
-             <h3>{movie.name}</h3>
+            
+             <Name>{movie.name}</Name>
              <CardActions>
                <Button size="small" href="/updateMovie"   onClick={() => setData(movie)}>Update</Button>
                <a  type="button"  size="small" onClick={()=>DeleteMovie(movie._id)}>Delete </a>
-      </CardActions>
+              </CardActions>
             </Wrap>
              
           ))}
@@ -149,4 +150,15 @@ const Wrap = styled.div`
   }
 `;
 
+const Name = styled.div`
+   margin-top: 35px;
+  line-height: 1.4;
+  font-size: 20px;
+  padding: 0px 0px;
+  color: #00004d;
+font-weight: thicker;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
 export default DisplayMovie;
