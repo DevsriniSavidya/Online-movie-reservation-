@@ -1,19 +1,13 @@
 import React from 'react'
-import  {useState, useEffect}  from 'react';
+import  {useState, useEffect,Fragment}  from 'react';
 import axios from 'axios';
 import { id } from 'date-fns/locale';
 import styled from "styled-components";
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
-// import DatePicker from "react-datepicker";
+import { KeyboardDatePicker,MuiPickersUtilsProvider  } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-
-import "react-datepicker/dist/react-datepicker.css";
 
 export default function MovieDetails(props) {
  
@@ -27,10 +21,9 @@ export default function MovieDetails(props) {
   const [ticketPrice,setTicketPrice] = useState();
   const [filmType,setFilmType] = useState();
   const [newTime,setNewTime] = useState();
-  // const [startDate, setStartDate] = useState(new Date());
-const [date, setDate] = useState(new Date());
 
-  const [disable, setDisable] = React.useState(false);
+ const [selectedDate, handleDateChange] = useState(new Date());
+ const [disable, setDisable] = React.useState(false);
 
   
   
@@ -59,36 +52,25 @@ const [date, setDate] = useState(new Date());
     }).catch((err)=>{
         alert(err.message);
     })
-  }
+    }
 
-  getDetails();
-  setMovieID(id);
+    getDetails();
+    setMovieID(id);
  
    },[]);
  
   
-
-   const setNewT = (time) =>{
+  //set Time
+  const setNewT = (time) =>{
          
      setNewTime(time);
      setDisable(true);
 
    }
 
-  const handleSelectDateChange = (date) => {
-     setDate(date);
-  };
 
-  const startDate = new Date();
 
-  function disablePrevDates(startDate) {
-    const startSeconds = Date.parse(startDate);
-    return (date) => {
-      return Date.parse(date) < startSeconds;
-    }
-  }
-
-    console.log(date);
+    console.log(selectedDate);
 
     //Add To Cart
    const AddToCart = async () =>{
@@ -99,7 +81,7 @@ const [date, setDate] = useState(new Date());
         
     //   movieId,
     //   newTime,
-    //   date,
+    //   selectedDate,
     //   //me tikai ubt cart eke pennann ona tika ganin
 
 
@@ -138,23 +120,19 @@ const [date, setDate] = useState(new Date());
                 <Button disabled={disable} className='mt-2 ms-2' variant="outlined" onClick={() => setNewT(time)}>{time}</Button> </div>
               ))}
               <Description>Select Date</Description>
+            
+             <MuiPickersUtilsProvider utils={DateFnsUtils}>
+             <KeyboardDatePicker
+             style={{width:"250px"}}
+               clearable
+               value={selectedDate}
+                placeholder="10/10/2018"
+                onChange={date => handleDateChange(date)}
+                minDate={new Date()}
+                format="MM/dd/yyyy"
+              />
+             </MuiPickersUtilsProvider>
 
-                <div className="col-md-12 mb-4 mx-3 mt-3">
-                 <div className="form-group" style={{width:"250px"}}>
-                   <LocalizationProvider dateAdapter={AdapterDateFns}>
-                     <Stack spacing={3}>
-                      <DesktopDatePicker
-                        shouldDisableDate={disablePrevDates(startDate)}
-                        inputFormat="dd/MM/yyyy"
-                        value={date}
-                        required
-                        onChange={handleSelectDateChange}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </Stack>
-                  </LocalizationProvider>
-                </div>
-                </div>
                 <Description>Ticket Price</Description>
                 Rs.{ticketPrice}
 
@@ -163,7 +141,7 @@ const [date, setDate] = useState(new Date());
                 <Button variant="outlined" color="success" size='large' onClick={()=>AddToCart()} style={{width:"200px"}} >
                  Add To Cart
                  </Button>
-                 </center>
+                 </center> 
 
             </div>
          </div> 
